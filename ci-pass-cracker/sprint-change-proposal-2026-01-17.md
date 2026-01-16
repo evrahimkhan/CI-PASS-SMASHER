@@ -47,3 +47,6 @@ The Docker container has an entrypoint defined that expects a file path as an ar
 - Action provides clear error messages when parameters are missing
 - Action only processes intended files, not internal scripts
 - Existing workflows continue to function when properly configured
+
+## Additional Notes
+The issue was identified during testing where the command `docker run jtr-action /app/entrypoint.sh /workspace/test_file.txt` was causing the entrypoint script to process itself instead of the intended file. This is because the container's entrypoint is already set to `/app/entrypoint.sh`, so when we specify it again as a command, it creates a parameter confusion.

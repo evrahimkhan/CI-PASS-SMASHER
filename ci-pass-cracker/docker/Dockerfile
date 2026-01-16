@@ -64,4 +64,8 @@ WORKDIR /app
 COPY ci-pass-cracker/docker/entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
+# Set entrypoint to the script
 ENTRYPOINT ["/app/entrypoint.sh"]
+
+# Default command to show usage when no parameters provided
+CMD ["--help"]

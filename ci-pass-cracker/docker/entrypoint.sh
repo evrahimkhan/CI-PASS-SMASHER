@@ -8,11 +8,31 @@ TELEGRAM_TOKEN=$4
 TELEGRAM_CHAT_ID=$5
 TIMEOUT=$6
 
-# Validate required inputs
-if [ -z "$FILE_PATH" ]; then
-    echo "Error: FILE_PATH is required as the first argument"
+# Check for help parameter
+if [ "$FILE_PATH" = "--help" ] || [ "$FILE_PATH" = "-h" ] || [ -z "$FILE_PATH" ]; then
+    echo "John the Ripper GitHub Action"
+    echo "=============================="
+    echo ""
     echo "Usage: $0 <file-path> [wordlist-url] [custom-rules] [telegram-token] [telegram-chat-id] [timeout]"
-    exit 1
+    echo ""
+    echo "Parameters:"
+    echo "  file-path        Path to the file to crack (required)"
+    echo "  wordlist-url     URL to download wordlist from (optional)"
+    echo "  custom-rules     Custom John the Ripper rules to apply (optional)"
+    echo "  telegram-token   Telegram bot token for notifications (optional)"
+    echo "  telegram-chat-id Telegram chat ID for notifications (optional)"
+    echo "  timeout          Timeout for cracking attempts in seconds (optional, default: 3600)"
+    echo ""
+    echo "Examples:"
+    echo "  docker run jtr-action /path/to/protected.pdf"
+    echo "  docker run jtr-action /path/to/protected.docx \"https://example.com/wordlist.txt\""
+    echo ""
+    if [ "$FILE_PATH" = "--help" ] || [ "$FILE_PATH" = "-h" ]; then
+        exit 0
+    else
+        echo "Error: FILE_PATH is required as the first argument"
+        exit 1
+    fi
 fi
 
 # Additional validation to prevent processing the entrypoint script itself
@@ -364,7 +384,14 @@ EOF
 fi
 
 # Run John the Ripper with timeout
-TIMEOUT_CMD="timeout $TIMEOUT $JOHN_CMD"
+TIMEOUT_CMD="timeout $TIMEOUT /usr/bin/john $FORMAT --wordlist=$WORDLIST_PATH $HASH_FILE"
+
+# Apply custom rules if provided
+if [ -n "$CUSTOM_RULES" ]; then
+    RULES_FILE="/tmp/rules.conf"
+    echo "$CUSTOM_RULES" > "$RULES_FILE"
+    TIMEOUT_CMD="$TIMEOUT_CMD --rules=$RULES_FILE"
+fi
 
 echo "Running: $TIMEOUT_CMD"
 eval $TIMEOUT_CMD
