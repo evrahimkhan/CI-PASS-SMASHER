@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       file-path:
-        description: 'Path to the file to crack'
+        description: 'Path to the file to crack (direct path in repo)'
         required: true
         default: 'protected_document.pdf'
       wordlist-url:
@@ -34,26 +34,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run John the Ripper
+      - name: Validate file exists
         run: |
-          # This would normally use the actual GitHub Action
-          # For demonstration purposes, we'll show what would happen
-          echo "This would run the John the Ripper action with:"
-          echo "File: ${{ inputs.file-path }}"
-          echo "Wordlist URL: ${{ inputs.wordlist-url }}"
-          echo "Timeout: ${{ inputs.timeout }} seconds"
-          
-          # In a real implementation, this would be:
-          # uses: your-username/jtr-action@v1
-          # with:
-          #   file-path: ${{ inputs.file-path }}
-          #   wordlist-url: ${{ inputs.wordlist-url }}
-          #   timeout: ${{ inputs.timeout }}
-          #   telegram-token: ${{ inputs.telegram-token }}
-          #   telegram-chat-id: ${{ inputs.telegram-chat-id }}
-          #   custom-rules: ${{ inputs.custom-rules }}
+          if [ ! -f "${{ inputs.file-path }}" ]; then
+            echo "Error: File does not exist at path ${{ inputs.file-path }}"
+            echo "Available files in repository:"
+            find . -type f -not -path "./.git/*" | head -20
+            exit 1
+          fi
+          echo "File found: ${{ inputs.file-path }}"
+
+      - name: Run John the Ripper Action
+        uses: ./ci-pass-cracker  # References the action in the ci-pass-cracker directory
+        with:
+          file-path: ${{ inputs.file-path }}
+          wordlist-url: ${{ inputs.wordlist-url }}
+          custom-rules: ${{ inputs.custom-rules }}
+          timeout: ${{ inputs.timeout }}
+          telegram-token: ${{ inputs.telegram-token }}
+          telegram-chat-id: ${{ inputs.telegram-chat-id }}
 
       - name: Display results
         run: |
           echo "Password cracking attempt completed"
           echo "Check the action logs for results"
+          echo "File processed: ${{ inputs.file-path }}"
