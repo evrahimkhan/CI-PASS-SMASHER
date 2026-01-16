@@ -8,6 +8,32 @@ TELEGRAM_TOKEN=$4
 TELEGRAM_CHAT_ID=$5
 TIMEOUT=$6
 
+# Validate required inputs
+if [ -z "$FILE_PATH" ]; then
+    echo "Error: FILE_PATH is required as the first argument"
+    echo "Usage: $0 <file-path> [wordlist-url] [custom-rules] [telegram-token] [telegram-chat-id] [timeout]"
+    exit 1
+fi
+
+# Additional validation to prevent processing the entrypoint script itself
+# Get the absolute path of the script file
+SCRIPT_PATH="/app/entrypoint.sh"
+INPUT_PATH="$(realpath "$FILE_PATH" 2>/dev/null || echo "$FILE_PATH")"
+
+# Compare the input path with the known script path
+if [ "$INPUT_PATH" = "$SCRIPT_PATH" ]; then
+    echo "Error: Cannot process the entrypoint script itself"
+    echo "Please provide a valid file path as the first argument"
+    exit 1
+fi
+
+if [ ! -f "$FILE_PATH" ]; then
+    echo "Error: File does not exist at path: $FILE_PATH"
+    echo "Available files in current directory:"
+    ls -la .
+    exit 1
+fi
+
 # Check usage policy compliance
 POLICY_CHECK_SCRIPT="/app/usage_policy_check.sh"
 
@@ -82,17 +108,6 @@ fi
 export JTR_COMPLIANCE_ACKNOWLEDGED=true  # In a real implementation, this would come from user configuration
 export JTR_LOGGING_CONSENT=true          # In a real implementation, this would come from user configuration
 $POLICY_CHECK_SCRIPT "$FILE_PATH"
-
-# Validate required inputs
-if [ -z "$FILE_PATH" ]; then
-    echo "Error: FILE_PATH is required"
-    exit 1
-fi
-
-if [ ! -f "$FILE_PATH" ]; then
-    echo "Error: File does not exist at path: $FILE_PATH"
-    exit 1
-fi
 
 echo "Starting password cracking process..."
 echo "File: $FILE_PATH"

@@ -1,117 +1,49 @@
-# Sprint Change Proposal - CI Pass Cracker Security & Architecture Improvements
-Date: 2026-01-17
+# Sprint Change Proposal - John the Ripper GitHub Action Parameter Issue
 
-## Executive Summary
-Following a comprehensive adversarial code review, 8 critical issue categories have been identified in the CI Pass Cracker implementation that require immediate attention. This proposal outlines necessary changes to address security vulnerabilities, architectural weaknesses, and maintainability concerns.
+## Date
+2026-01-17
 
-## Identified Issues
-
-### 1. Critical Security Vulnerabilities
-- Command injection vulnerability in docker/entrypoint.sh
-- Insecure file access allowing path traversal
-- Missing input validation enabling malicious input
-
-### 2. Architecture & Design Problems
-- Monolithic Docker image (1.19GB) with excessive dependencies
-- Hardcoded paths reducing portability
-- Lack of resource constraints
-
-### 3. Performance Issues
-- Inefficient John the Ripper compilation during build (3+ minutes)
-- No resource limits for containers
-- Suboptimal caching strategy
-
-### 4. Test Coverage Deficiencies
-- No unit tests for core logic
-- Missing security-focused test cases
-- Insufficient error condition testing
-
-### 5. Operational Concerns
-- Poor error handling and logging
-- Missing input validation
-- No health check mechanisms
-
-## Proposed Solutions
-
-### Phase 1: Security Hardening (Priority 1)
-- Implement strict input validation and sanitization
-- Add parameterized command execution to prevent injection
-- Introduce secure file path validation
-- Add allowlist for accepted file types and paths
-
-### Phase 2: Architecture Optimization (Priority 2)
-- Refactor Dockerfile to use multi-stage builds
-- Reduce image size by removing unnecessary dependencies
-- Implement proper resource constraints
-- Add security scanning to build pipeline
-
-### Phase 3: Testing Enhancement (Priority 3)
-- Create comprehensive unit tests for entrypoint.sh
-- Add security-focused test cases
-- Implement automated security scanning
-- Add performance regression tests
-
-### Phase 4: Operational Improvements (Priority 4)
-- Implement proper error handling and logging
-- Add health check endpoints
-- Create monitoring and alerting mechanisms
-- Add audit logging for compliance
+## Issue Description
+The John the Ripper GitHub Action is experiencing a parameter handling issue where the container's entrypoint script is attempting to process itself (`/app/entrypoint.sh`) instead of the intended target file. This occurs when the action is run without proper parameters or when the file path parameter is not correctly passed to the container.
 
 ## Impact Analysis
+- **Functional Impact**: The action fails to process the intended file
+- **User Experience**: Users receive confusing error messages
+- **Security**: Potential for unintended file processing if not handled properly
+- **Reliability**: Action consistently fails when parameters are not properly configured
 
-### Positive Impacts
-- Enhanced security posture
-- Improved performance and reduced resource usage
-- Better maintainability and extensibility
-- Increased reliability and stability
+## Root Cause
+The Docker container has an entrypoint defined that expects a file path as an argument. When the action is run without proper parameters, the entrypoint script receives no file path argument and defaults to processing the entrypoint script itself, which is not a valid password-protected file.
 
-### Resource Requirements
-- 2 senior developers for 2 sprints (8 story points)
-- Security expert consultation (2 days)
-- Infrastructure updates for improved monitoring
+## Proposed Solution
+1. **Parameter Validation**: Add robust parameter validation to ensure required inputs are provided
+2. **Default Behavior**: Modify the entrypoint script to handle missing parameters gracefully
+3. **Error Messaging**: Improve error messages to guide users on proper usage
+4. **Documentation**: Update documentation with clear usage examples
 
-### Risk Mitigation
-- Implement changes in isolated development environment first
-- Thorough testing before production deployment
-- Rollback plan in case of issues
+## Implementation Plan
+1. Update the entrypoint.sh script to validate required parameters before proceeding
+2. Add a check to ensure the file path parameter is provided and is not empty
+3. Add a check to ensure the file path is not pointing to the entrypoint script itself
+4. Provide clear error messages when required parameters are missing
+5. Update the action.yml to ensure proper parameter passing
 
-## Implementation Strategy
-
-### Sprint 1
-- Address critical security vulnerabilities (Stories 1-3)
-- Implement input validation and sanitization
-- Begin Docker image optimization
-
-### Sprint 2
-- Complete architecture refactoring (Stories 4-6)
-- Add comprehensive test coverage
-- Implement monitoring and logging
-
-### Sprint 3
-- Final security hardening (Stories 7-8)
-- Performance optimization
-- Documentation updates
-
-## Success Metrics
-- Zero critical security vulnerabilities
-- Docker image size reduced by 30%
-- 90% test coverage achieved
-- Performance improvements validated
-- Security scanning integrated into CI/CD
-
-## Dependencies
-- Security team approval for implementation approach
-- Infrastructure team for monitoring setup
-- DevOps team for deployment pipeline updates
+## Risk Assessment
+- **Low Risk**: Changes are limited to parameter validation and error handling
+- **Security Impact**: Minimal - improves security by preventing unintended file processing
+- **Compatibility**: Backward compatible with existing workflows when properly configured
 
 ## Timeline
-Start Date: 2026-01-18
-Target Completion: 2026-02-08
-Duration: 3 sprints
+- Implementation: 1 day
+- Testing: 1 day
+- Deployment: 1 day
 
-## Approval Required
-This change proposal requires approval from:
-- Product Owner
-- Security Team Lead
-- Engineering Manager
-- DevOps Team Lead
+## Resources Required
+- 1 developer for implementation
+- Access to testing environment
+
+## Success Criteria
+- Action properly validates input parameters
+- Action provides clear error messages when parameters are missing
+- Action only processes intended files, not internal scripts
+- Existing workflows continue to function when properly configured
