@@ -43,6 +43,7 @@ RUN apt-get update && \
     rar \
     unrar \
     p7zip-full \
+    file \
     && rm -rf /var/lib/apt/lists/*
 
 # Get additional extraction tools that might not be in the base package

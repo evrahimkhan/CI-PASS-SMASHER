@@ -1,0 +1,3 @@
+# Test input file for John the Ripper GitHub Action
+
+This is a test document to verify that the John the Ripper GitHub Action is working correctly.
