@@ -3,11 +3,11 @@ description: 'GitHub Action for cracking passwords from various file types using
 branding:
   icon: 'lock'
   color: 'red'
+
 inputs:
   file-path:
     description: 'Path to the file to crack'
     required: true
-    default: ''
   wordlist-url:
     description: 'URL to download wordlist from (optional)'
     required: false
@@ -28,12 +28,14 @@ inputs:
     description: 'Timeout for cracking attempts in seconds'
     required: false
     default: '3600'
+
 outputs:
   cracked-password:
     description: 'The cracked password if successful'
+
 runs:
   using: 'docker'
-  image: './docker/Dockerfile'
+  image: 'docker/Dockerfile'
   args:
     - ${{ inputs.file-path }}
     - ${{ inputs.wordlist-url }}

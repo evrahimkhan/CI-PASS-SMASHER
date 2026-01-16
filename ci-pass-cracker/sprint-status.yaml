@@ -87,19 +87,95 @@ stories:
     testing_status: "not-started"
     deployment_status: "not-deployed"
 
+  - id: "Security_Issue_1"
+    epic_id: "epic_jtr_implementation"
+    title: "Critical Security Issue 1: Command Injection Vulnerability"
+    description: "The entrypoint.sh script has command injection vulnerability allowing arbitrary command execution through file paths"
+    acceptance_criteria:
+      - "Input validation implemented for all user inputs"
+      - "Parameterized commands used instead of string interpolation"
+      - "Security testing confirms vulnerability is resolved"
+    priority: "critical"
+    status: "backlog"
+    assignee: ""
+    estimate: 5
+    created_date: "2026-01-17"
+    updated_date: "2026-01-17"
+    blocked: false
+    blocker_notes: ""
+    testing_status: "not-started"
+    deployment_status: "not-deployed"
+
+  - id: "Security_Issue_2"
+    epic_id: "epic_jtr_implementation"
+    title: "Critical Security Issue 2: Insecure File Access"
+    description: "Scripts allow path traversal and insecure file access without proper validation"
+    acceptance_criteria:
+      - "Secure file path validation implemented"
+      - "Allowlist for file access created and enforced"
+      - "Path traversal prevention implemented"
+    priority: "critical"
+    status: "backlog"
+    assignee: ""
+    estimate: 3
+    created_date: "2026-01-17"
+    updated_date: "2026-01-17"
+    blocked: false
+    blocker_notes: ""
+    testing_status: "not-started"
+    deployment_status: "not-deployed"
+
+  - id: "Performance_Issue_1"
+    epic_id: "epic_jtr_implementation"
+    title: "High Priority Issue 3: Docker Image Optimization"
+    description: "Docker image is 1.19GB with excessive dependencies, increasing build time and attack surface"
+    acceptance_criteria:
+      - "Docker image size reduced by 30%"
+      - "Build time decreased by 50%"
+      - "Unnecessary dependencies removed"
+    priority: "high"
+    status: "backlog"
+    assignee: ""
+    estimate: 5
+    created_date: "2026-01-17"
+    updated_date: "2026-01-17"
+    blocked: false
+    blocker_notes: ""
+    testing_status: "not-started"
+    deployment_status: "not-deployed"
+
+  - id: "Testing_Issue_1"
+    epic_id: "epic_jtr_implementation"
+    title: "High Priority Issue 4: Test Coverage Implementation"
+    description: "No unit tests for core logic, missing security-focused test cases"
+    acceptance_criteria:
+      - "Unit tests created for entrypoint.sh"
+      - "Security-focused test cases implemented"
+      - "Test coverage reaches 90%"
+    priority: "high"
+    status: "backlog"
+    assignee: ""
+    estimate: 3
+    created_date: "2026-01-17"
+    updated_date: "2026-01-17"
+    blocked: false
+    blocker_notes: ""
+    testing_status: "not-started"
+    deployment_status: "not-deployed"
+
 status_tracking:
   created_date: "2026-01-17"
   last_updated: "2026-01-17"
-  total_stories: 5
+  total_stories: 8
   stories_by_status:
-    backlog: 4
+    backlog: 8
     in-progress: 0
     in-review: 0
     done: 0
   stories_by_priority:
-    critical: 0
-    high: 0
-    medium: 0
+    critical: 3
+    high: 3
+    medium: 2
     low: 0
   completion_percentage: 0
   velocity: 0

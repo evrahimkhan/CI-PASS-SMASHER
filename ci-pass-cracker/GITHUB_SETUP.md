@@ -1,3 +1,38 @@
+# CI Pass Cracker - GitHub Actions Setup Guide
+
+This guide explains how to properly set up and use the CI Pass Cracker in GitHub Actions.
+
+## Repository Structure
+
+The CI Pass Cracker expects the following repository structure:
+
+```
+.
+├── ci-pass-cracker/           # Main action directory
+│   ├── action.yml            # Action definition
+│   ├── docker/
+│   │   ├── Dockerfile        # Docker build file
+│   │   └── entrypoint.sh     # Entry point script
+│   └── ...
+├── .github/
+│   └── workflows/
+│       └── jtr-action.yaml   # GitHub Actions workflow
+└── sample-protected-document.md  # Example file to process
+```
+
+## Setting Up the Action
+
+### 1. Repository Preparation
+
+1. Clone your repository locally
+2. Ensure the `ci-pass-cracker/` directory exists with all necessary files
+3. Add password-protected files you want to process to your repository
+
+### 2. GitHub Actions Workflow
+
+Create a workflow file at `.github/workflows/jtr-action.yaml` with the following content:
+
+```yaml
 name: John the Ripper Action
 
 on:
@@ -70,3 +105,26 @@ jobs:
           echo "Password cracking attempt completed"
           echo "Check the action logs for results"
           echo "File processed: ${{ inputs.file-path }}"
+```
+
+## Troubleshooting Common Issues
+
+### Issue: "Dockerfile not found"
+**Solution**: Ensure the Dockerfile exists at `./ci-pass-cracker/docker/Dockerfile` relative to your repository root.
+
+### Issue: "File does not exist"
+**Solution**: Verify the file path is correct relative to your repository root and that the file is committed to the repository.
+
+### Issue: Permission Denied
+**Solution**: Ensure your GitHub Actions workflow has the necessary permissions to read repository contents.
+
+## Security Considerations
+
+⚠️ **IMPORTANT**: This action is intended for authorized penetration testing and security research only. Always ensure you have explicit permission before attempting to recover passwords from any system or file you do not own.
+
+## Usage Notes
+
+- The action will only process files that are committed to your repository
+- Large files may cause timeouts; adjust the timeout parameter as needed
+- For security reasons, cracked passwords will only be visible in the action logs
+- Telegram notifications require valid bot tokens and chat IDs to be configured as secrets

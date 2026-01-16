@@ -1,0 +1,96 @@
+name: CI Pass Cracker Diagnostic
+
+on:
+  workflow_dispatch:
+    inputs:
+      debug-mode:
+        description: 'Enable debug mode'
+        required: true
+        default: true
+        type: boolean
+      file-path:
+        description: 'Path to the file to crack (relative to repo root)'
+        required: true
+        default: 'sample-protected-document.md'
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Display system information
+        run: |
+          echo "=== System Information ==="
+          pwd
+          whoami
+          ls -la
+          echo "=== Repository Structure ==="
+          find . -type f -name "*.md" -o -name "*.sh" -o -name "Dockerfile" -o -name "action.yml" | head -20
+
+      - name: Check Dockerfile existence
+        run: |
+          echo "=== Checking Dockerfile ==="
+          if [ -f "./ci-pass-cracker/docker/Dockerfile" ]; then
+            echo "Dockerfile exists"
+            ls -la ./ci-pass-cracker/docker/Dockerfile
+            cat ./ci-pass-cracker/docker/Dockerfile | head -20
+          else
+            echo "ERROR: Dockerfile does not exist at ./ci-pass-cracker/docker/Dockerfile"
+            find . -name "Dockerfile" -type f
+          fi
+
+      - name: Check entrypoint.sh existence
+        run: |
+          echo "=== Checking entrypoint.sh ==="
+          if [ -f "./ci-pass-cracker/docker/entrypoint.sh" ]; then
+            echo "entrypoint.sh exists"
+            ls -la ./ci-pass-cracker/docker/entrypoint.sh
+          else
+            echo "ERROR: entrypoint.sh does not exist at ./ci-pass-cracker/docker/entrypoint.sh"
+            find . -name "entrypoint.sh" -type f
+          fi
+
+      - name: Check action.yml existence
+        run: |
+          echo "=== Checking action.yml ==="
+          if [ -f "./ci-pass-cracker/action.yml" ]; then
+            echo "action.yml exists"
+            ls -la ./ci-pass-cracker/action.yml
+            cat ./ci-pass-cracker/action.yml
+          else
+            echo "ERROR: action.yml does not exist at ./ci-pass-cracker/action.yml"
+            find . -name "action.yml" -type f
+          fi
+
+      - name: Build Docker image (debug)
+        run: |
+          echo "=== Building Docker image ==="
+          docker build -f ./ci-pass-cracker/docker/Dockerfile -t jtr-debug .
+          docker images | grep jtr-debug
+
+      - name: Test John the Ripper in container
+        run: |
+          echo "=== Testing John the Ripper in container ==="
+          docker run --rm jtr-debug bash -c "which john && john --list=formats | head -5 || echo 'John the Ripper test completed'"
+
+      - name: Test extraction tools in container
+        run: |
+          echo "=== Testing extraction tools in container ==="
+          docker run --rm jtr-debug bash -c "ls -la /usr/local/bin/ | grep john | head -10"
+
+      - name: Check for sample file
+        run: |
+          echo "=== Checking for sample file ==="
+          if [ -f "${{ inputs.file-path }}" ]; then
+            echo "File exists: ${{ inputs.file-path }}"
+            ls -la "${{ inputs.file-path }}"
+          else
+            echo "File does not exist: ${{ inputs.file-path }}"
+            echo "Available files in repo:"
+            find . -type f | head -20
+          fi
