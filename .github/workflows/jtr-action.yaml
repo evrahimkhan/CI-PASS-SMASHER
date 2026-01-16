@@ -1,0 +1,59 @@
+name: John the Ripper Action
+
+on:
+  workflow_dispatch:
+    inputs:
+      file-path:
+        description: 'Path to the file to crack'
+        required: true
+        default: 'protected_document.pdf'
+      wordlist-url:
+        description: 'URL to download wordlist from (optional)'
+        required: false
+      custom-rules:
+        description: 'Custom John the Ripper rules to apply (optional)'
+        required: false
+      timeout:
+        description: 'Timeout in seconds'
+        required: false
+        default: '3600'
+      telegram-token:
+        description: 'Telegram bot token for notifications (optional)'
+        required: false
+      telegram-chat-id:
+        description: 'Telegram chat ID for notifications (optional)'
+        required: false
+
+permissions:
+  contents: read
+
+jobs:
+  crack-password:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run John the Ripper
+        run: |
+          # This would normally use the actual GitHub Action
+          # For demonstration purposes, we'll show what would happen
+          echo "This would run the John the Ripper action with:"
+          echo "File: ${{ inputs.file-path }}"
+          echo "Wordlist URL: ${{ inputs.wordlist-url }}"
+          echo "Timeout: ${{ inputs.timeout }} seconds"
+          
+          # In a real implementation, this would be:
+          # uses: your-username/jtr-action@v1
+          # with:
+          #   file-path: ${{ inputs.file-path }}
+          #   wordlist-url: ${{ inputs.wordlist-url }}
+          #   timeout: ${{ inputs.timeout }}
+          #   telegram-token: ${{ inputs.telegram-token }}
+          #   telegram-chat-id: ${{ inputs.telegram-chat-id }}
+          #   custom-rules: ${{ inputs.custom-rules }}
+
+      - name: Display results
+        run: |
+          echo "Password cracking attempt completed"
+          echo "Check the action logs for results"

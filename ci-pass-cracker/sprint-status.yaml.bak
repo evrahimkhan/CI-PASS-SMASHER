@@ -1,0 +1,129 @@
+# Sprint Status Template
+
+sprint_info:
+  name: "CI Pass Cracker Sprint Status"
+  start_date: "2026-01-17"
+  end_date: ""
+  team_members: []
+  objectives: []
+
+epics:
+  - id: ""
+    title: ""
+    description: ""
+    priority: ""
+    status: ""
+    stories: []
+    created_date: ""
+    updated_date: ""
+
+stories:
+  - id: ""
+    epic_id: ""
+    title: ""
+    description: ""
+    acceptance_criteria: []
+    priority: ""
+    status: "backlog"  # backlog, in-progress, in-review, done
+    assignee: ""
+    estimate: 0  # story points
+    created_date: ""
+    updated_date: ""
+    blocked: false
+    blocker_notes: ""
+    testing_status: "not-started"  # not-started, in-progress, passed, failed
+    deployment_status: "not-deployed"  # not-deployed, deployed
+
+status_tracking:
+  created_date: ""
+  last_updated: ""
+  total_stories: 6
+  stories_by_status:
+    backlog: 0
+    in-progress: 0
+    in-review: 0
+    done: 0
+  stories_by_priority:
+    critical: 0
+    high: 0
+    medium: 0
+    low: 0
+  completion_percentage: 0
+  velocity: 0  # average story points completed per sprint
+
+timeline:
+  current_sprint_day: 0
+  days_remaining: 0
+  major_milestones: []  - id: "epic_jtr_implementation"
+    title: "Epic: John the Ripper GitHub Action Implementation"
+    description: "
+As a developer, I want to create a GitHub Action that uses John the Ripper for password cracking so that I can automate password recovery workflows.
+
+## User Stories
+
+### Story 1: Basic Action Setup"
+    priority: "medium"
+    status: "defined"
+    stories: []
+    created_date: "2026-01-17"
+    updated_date: "2026-01-17"
+  - id: "Story_1__Basic_Actio"
+    epic_id: "epic_jtr_implementation"
+    title: "Story 1: Basic Action Setup"
+    description: ""
+    acceptance_criteria: []
+    priority: "medium"
+    status: "backlog"
+    assignee: ""
+    estimate: 0
+    created_date: "2026-01-17"
+    updated_date: "2026-01-17"
+    blocked: false
+    blocker_notes: ""
+    testing_status: "not-started"
+    deployment_status: "not-deployed"
+  - id: "Story_2__Telegram_No"
+    epic_id: "epic_jtr_implementation"
+    title: "Story 2: Telegram Notifications"
+    description: ""
+    acceptance_criteria: []
+    priority: "medium"
+    status: "backlog"
+    assignee: ""
+    estimate: 0
+    created_date: "2026-01-17"
+    updated_date: "2026-01-17"
+    blocked: false
+    blocker_notes: ""
+    testing_status: "not-started"
+    deployment_status: "not-deployed"
+  - id: "Story_3__File_Type_S"
+    epic_id: "epic_jtr_implementation"
+    title: "Story 3: File Type Support"
+    description: ""
+    acceptance_criteria: []
+    priority: "medium"
+    status: "backlog"
+    assignee: ""
+    estimate: 0
+    created_date: "2026-01-17"
+    updated_date: "2026-01-17"
+    blocked: false
+    blocker_notes: ""
+    testing_status: "not-started"
+    deployment_status: "not-deployed"
+  - id: "Story_4__Security_Co"
+    epic_id: "epic_jtr_implementation"
+    title: "Story 4: Security Compliance"
+    description: ""
+    acceptance_criteria: []
+    priority: "medium"
+    status: "backlog"
+    assignee: ""
+    estimate: 0
+    created_date: "2026-01-17"
+    updated_date: "2026-01-17"
+    blocked: false
+    blocker_notes: ""
+    testing_status: "not-started"
+    deployment_status: "not-deployed"

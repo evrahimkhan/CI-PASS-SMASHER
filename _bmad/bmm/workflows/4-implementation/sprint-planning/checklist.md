@@ -1,33 +1,42 @@
-# Sprint Planning Validation Checklist
+# Sprint Status Validation Checklist
 
-## Core Validation
+## Pre-Execution Checks
+- [ ] All epic files are present in the planning artifacts directory
+- [ ] Epic files follow the naming convention "epic*.md"
+- [ ] Each epic file contains properly formatted user stories
+- [ ] Implementation artifacts directory is accessible
+- [ ] Previous sprint-status.yaml file is backed up (if exists)
 
-### Complete Coverage Check
+## During Execution Checks
+- [ ] All epic files are successfully parsed
+- [ ] User stories are correctly extracted from epic files
+- [ ] Story IDs are unique across all epics
+- [ ] Status values are valid (backlog, in-progress, in-review, done)
+- [ ] Priority values are valid (critical, high, medium, low)
+- [ ] All required fields are populated for each story
 
-- [ ] Every epic found in epic\*.md files appears in sprint-status.yaml
-- [ ] Every story found in epic\*.md files appears in sprint-status.yaml
-- [ ] Every epic has a corresponding retrospective entry
-- [ ] No items in sprint-status.yaml that don't exist in epic files
+## Post-Execution Validation
+- [ ] sprint-status.yaml file is generated successfully
+- [ ] Generated YAML file is syntactically correct
+- [ ] All statistics are calculated correctly
+- [ ] Total story count matches actual number of stories
+- [ ] Status distribution is accurate
+- [ ] No duplicate story IDs exist
+- [ ] All referenced epic IDs exist in the epics section
+- [ ] Dates are in valid format (YYYY-MM-DD)
 
-### Parsing Verification
+## Quality Assurance
+- [ ] All stories have meaningful titles and descriptions
+- [ ] Acceptance criteria are clearly defined for each story
+- [ ] Estimates seem reasonable for the complexity described
+- [ ] Priority assignments are appropriate
+- [ ] Assignees are valid team members
+- [ ] Blocked stories have appropriate blocker notes
+- [ ] Testing and deployment statuses are up-to-date
 
-Compare epic files against generated sprint-status.yaml:
-
-```
-Epic Files Contains:                Sprint Status Contains:
-✓ Epic 1                            ✓ epic-1: [status]
-  ✓ Story 1.1: User Auth              ✓ 1-1-user-auth: [status]
-  ✓ Story 1.2: Account Mgmt           ✓ 1-2-account-mgmt: [status]
-  ✓ Story 1.3: Plant Naming           ✓ 1-3-plant-naming: [status]
-                                      ✓ epic-1-retrospective: [status]
-✓ Epic 2                            ✓ epic-2: [status]
-  ✓ Story 2.1: Personality Model      ✓ 2-1-personality-model: [status]
-  ✓ Story 2.2: Chat Interface         ✓ 2-2-chat-interface: [status]
-                                      ✓ epic-2-retrospective: [status]
-```
-
-### Final Check
-
-- [ ] Total count of epics matches
-- [ ] Total count of stories matches
-- [ ] All items are in the expected order (epic, stories, retrospective)
+## Final Verification
+- [ ] sprint-status.yaml file is saved in the correct location
+- [ ] File has appropriate read/write permissions
+- [ ] Status tracking information is current
+- [ ] Timeline information is accurate
+- [ ] Velocity calculation is based on recent sprints

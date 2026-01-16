@@ -1,55 +1,57 @@
 # Sprint Status Template
-# This is an EXAMPLE showing the expected format
-# The actual file will be generated with all epics/stories from your epic files
 
-# generated: {date}
-# project: {project_name}
-# project_key: {project_key}
-# tracking_system: {tracking_system}
-# story_location: {story_location}
+sprint_info:
+  name: ""
+  start_date: ""
+  end_date: ""
+  team_members: []
+  objectives: []
 
-# STATUS DEFINITIONS:
-# ==================
-# Epic Status:
-#   - backlog: Epic not yet started
-#   - in-progress: Epic actively being worked on
-#   - done: All stories in epic completed
-#
-# Story Status:
-#   - backlog: Story only exists in epic file
-#   - ready-for-dev: Story file created, ready for development
-#   - in-progress: Developer actively working on implementation
-#   - review: Implementation complete, ready for review
-#   - done: Story completed
-#
-# Retrospective Status:
-#   - optional: Can be completed but not required
-#   - done: Retrospective has been completed
-#
-# WORKFLOW NOTES:
-# ===============
-# - Mark epic as 'in-progress' when starting work on its first story
-# - SM typically creates next story ONLY after previous one is 'done' to incorporate learnings
-# - Dev moves story to 'review', then Dev runs code-review (fresh context, ideally different LLM)
+epics:
+  - id: ""
+    title: ""
+    description: ""
+    priority: ""
+    status: ""
+    stories: []
+    created_date: ""
+    updated_date: ""
 
-# EXAMPLE STRUCTURE (your actual epics/stories will replace these):
+stories:
+  - id: ""
+    epic_id: ""
+    title: ""
+    description: ""
+    acceptance_criteria: []
+    priority: ""
+    status: "backlog"  # backlog, in-progress, in-review, done
+    assignee: ""
+    estimate: 0  # story points
+    created_date: ""
+    updated_date: ""
+    blocked: false
+    blocker_notes: ""
+    testing_status: "not-started"  # not-started, in-progress, passed, failed
+    deployment_status: "not-deployed"  # not-deployed, deployed
 
-generated: 05-06-2-2025 21:30
-project: My Awesome Project
-project_key: jira-1234
-tracking_system: file-system
-story_location: "{story_location}"
+status_tracking:
+  created_date: ""
+  last_updated: ""
+  total_stories: 0
+  stories_by_status:
+    backlog: 0
+    in-progress: 0
+    in-review: 0
+    done: 0
+  stories_by_priority:
+    critical: 0
+    high: 0
+    medium: 0
+    low: 0
+  completion_percentage: 0
+  velocity: 0  # average story points completed per sprint
 
-development_status:
-  epic-1: backlog
-  1-1-user-authentication: done
-  1-2-account-management: ready-for-dev
-  1-3-plant-data-model: backlog
-  1-4-add-plant-manual: backlog
-  epic-1-retrospective: optional
-
-  epic-2: backlog
-  2-1-personality-system: backlog
-  2-2-chat-interface: backlog
-  2-3-llm-integration: backlog
-  epic-2-retrospective: optional
+timeline:
+  current_sprint_day: 0
+  days_remaining: 0
+  major_milestones: []
