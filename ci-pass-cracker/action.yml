@@ -33,7 +33,7 @@ outputs:
     description: 'The cracked password if successful'
 runs:
   using: 'docker'
-  image: '../docker/Dockerfile'
+  image: './docker/Dockerfile'
   args:
     - ${{ inputs.file-path }}
     - ${{ inputs.wordlist-url }}

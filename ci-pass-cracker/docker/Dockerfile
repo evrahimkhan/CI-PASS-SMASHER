@@ -60,7 +60,7 @@ RUN git clone https://github.com/openwall/john.git && \
 WORKDIR /app
 
 # Copy entrypoint script
-COPY entrypoint.sh /app/entrypoint.sh
+COPY ci-pass-cracker/docker/entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
 ENTRYPOINT ["/app/entrypoint.sh"]
