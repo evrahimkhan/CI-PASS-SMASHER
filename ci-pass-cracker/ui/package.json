@@ -1,0 +1,39 @@
+{
+  "name": "jtr-dashboard",
+  "version": "1.0.0",
+  "description": "Modern UI dashboard for John the Ripper password cracker",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx serve ./public",
+    "dev": "npx live-server --dir=./public --port=3000",
+    "build": "echo 'Build process would go here'"
+  },
+  "keywords": [
+    "john-the-ripper",
+    "password-cracking",
+    "dashboard",
+    "cybersecurity",
+    "pentesting"
+  ],
+  "author": "Cybersecurity Researcher",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.0",
+    "@babel/preset-env": "^7.22.0",
+    "@babel/preset-react": "^7.22.0",
+    "serve": "^14.2.0",
+    "live-server": "^1.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/jtr-dashboard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/jtr-dashboard/issues"
+  },
+  "homepage": "https://github.com/your-username/jtr-dashboard#readme"
+}

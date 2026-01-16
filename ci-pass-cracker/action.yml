@@ -1,0 +1,43 @@
+name: 'John the Ripper Password Cracker'
+description: 'GitHub Action for cracking passwords from various file types using John the Ripper'
+branding:
+  icon: 'lock'
+  color: 'red'
+inputs:
+  file-path:
+    description: 'Path to the file to crack'
+    required: true
+    default: ''
+  wordlist-url:
+    description: 'URL to download wordlist from (optional)'
+    required: false
+    default: ''
+  custom-rules:
+    description: 'Custom John the Ripper rules to apply (optional)'
+    required: false
+    default: ''
+  telegram-token:
+    description: 'Telegram bot token for notifications (optional)'
+    required: false
+    default: ''
+  telegram-chat-id:
+    description: 'Telegram chat ID for notifications (optional)'
+    required: false
+    default: ''
+  timeout:
+    description: 'Timeout for cracking attempts in seconds'
+    required: false
+    default: '3600'
+outputs:
+  cracked-password:
+    description: 'The cracked password if successful'
+runs:
+  using: 'docker'
+  image: 'docker/Dockerfile'
+  args:
+    - ${{ inputs.file-path }}
+    - ${{ inputs.wordlist-url }}
+    - ${{ inputs.custom-rules }}
+    - ${{ inputs.telegram-token }}
+    - ${{ inputs.telegram-chat-id }}
+    - ${{ inputs.timeout }}
