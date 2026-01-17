@@ -36,11 +36,11 @@ if [ "$FILE_PATH" = "--help" ] || [ "$FILE_PATH" = "-h" ] || [ -z "$FILE_PATH" ]
 fi
 
 # Additional validation to prevent processing the entrypoint script itself
-# Get the absolute path of the script file
-SCRIPT_PATH="/app/entrypoint.sh"
+# Get the absolute path of the script file being executed
+SCRIPT_PATH="$(realpath "$0" 2>/dev/null || echo "/app/entrypoint.sh")"
 INPUT_PATH="$(realpath "$FILE_PATH" 2>/dev/null || echo "$FILE_PATH")"
 
-# Compare the input path with the known script path
+# Compare the input path with the script path
 if [ "$INPUT_PATH" = "$SCRIPT_PATH" ]; then
     echo "Error: Cannot process the entrypoint script itself"
     echo "Please provide a valid file path as the first argument"

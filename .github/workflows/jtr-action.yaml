@@ -50,20 +50,15 @@ jobs:
           echo "File found: ${{ inputs.file-path }}"
           ls -la "${{ inputs.file-path }}"
 
-      - name: Build and run John the Ripper Docker container directly
-        run: |
-          # Build the Docker image from the repository
-          if [ -f "./ci-pass-cracker/docker/Dockerfile" ]; then
-            echo "Building Docker image from ./ci-pass-cracker/docker/Dockerfile"
-            docker build -f ./ci-pass-cracker/docker/Dockerfile -t jtr-action .
-          else
-            echo "ERROR: Dockerfile not found at ./ci-pass-cracker/docker/Dockerfile"
-            exit 1
-          fi
-
-          # Run the container with the specified file
-          echo "Running John the Ripper on file: ${{ inputs.file-path }}"
-          docker run --rm -v $(pwd):/workspace -w /workspace jtr-action /app/entrypoint.sh "${{ inputs.file-path }}" "${{ inputs.wordlist-url }}" "${{ inputs.custom-rules }}" "${{ inputs.telegram-token }}" "${{ inputs.telegram-chat-id }}" "${{ inputs.timeout }}"
+      - name: Run John the Ripper Action
+        uses: ./ci-pass-cracker  # References the action in the ci-pass-cracker directory
+        with:
+          file-path: ${{ inputs.file-path }}
+          wordlist-url: ${{ inputs.wordlist-url }}
+          custom-rules: ${{ inputs.custom-rules }}
+          timeout: ${{ inputs.timeout }}
+          telegram-token: ${{ inputs.telegram-token }}
+          telegram-chat-id: ${{ inputs.telegram-chat-id }}
 
       - name: Display results
         run: |
