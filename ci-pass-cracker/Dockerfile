@@ -35,7 +35,7 @@ RUN locale-gen en_US.UTF-8
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 
-# Install John the Ripper from source to get latest version and all utilities
+# Install John the Ripper and related tools
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     john \
@@ -66,6 +66,3 @@ RUN chmod +x /app/entrypoint.sh
 
 # Set entrypoint to the script
 ENTRYPOINT ["/app/entrypoint.sh"]
-
-# Default command to show usage when no parameters provided
-CMD ["--help"]

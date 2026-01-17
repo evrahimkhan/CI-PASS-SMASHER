@@ -205,20 +205,20 @@ stories:
 
 status_tracking:
   created_date: "2026-01-17"
-  last_updated: "2026-01-17"
+  last_updated: "2026-01-18"
   total_stories: 10
   stories_by_status:
-    backlog: 6
+    backlog: 5
     in-progress: 0
     in-review: 0
-    done: 4
+    done: 5
   stories_by_priority:
     critical: 0
-    high: 3
+    high: 2
     medium: 2
     low: 0
-  completion_percentage: 40
-  velocity: 29
+  completion_percentage: 50
+  velocity: 37
 
 timeline:
   current_sprint_day: 0

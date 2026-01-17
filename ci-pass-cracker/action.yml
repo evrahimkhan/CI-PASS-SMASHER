@@ -35,7 +35,7 @@ outputs:
 
 runs:
   using: 'docker'
-  image: 'docker/Dockerfile'
+  image: 'Dockerfile'
   args:
     - ${{ inputs.file-path }}
     - ${{ inputs.wordlist-url }}
